@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const api = require('./routes/index.js');
+const fs = require('fs');
 
 const PORT = 3001;
 
@@ -18,9 +19,19 @@ app.get('/', (req, res) =>
 );
 
 // GET Route for notes page
-app.get('/api/notes', (req, res) =>
+app.get('/notes', (req, res) =>
   res.sendFile(path.join(__dirname, 'public/notes.html'))
 );
+
+app.get('/api/notes', (req, res) => {
+	fs.readFile(path.join(__dirname, '/db/db.json'), 'utf8', (err, data) => {
+		if (err) {
+			console.error(err);
+		}
+		const notes = JSON.parse(data);
+		res.json(notes);
+	});
+});
 
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT}`)
