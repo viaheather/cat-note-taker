@@ -27,12 +27,6 @@ None
 ## Features
 Express.js
 
-## GitHub Profile
-viaheather
-
-## Contact Information
-LinkedIn is also viaheather
-
 ## How to Contribute
 Fork this repo and initiate a pull request.
 
