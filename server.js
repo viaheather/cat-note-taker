@@ -1,15 +1,12 @@
 const express = require('express');
 const path = require('path');
-const api = require('./routes/index.js');
 const fs = require('fs');
 
 const PORT = 3001;
-
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('/api', api);
 
 app.use(express.static('public'));
 
@@ -24,13 +21,24 @@ app.get('/notes', (req, res) =>
 );
 
 app.get('/api/notes', (req, res) => {
-	fs.readFile(path.join(__dirname, '/db/db.json'), 'utf8', (err, data) => {
+	fs.readFile('db/db.json', 'utf8', (err, data) => {
 		if (err) {
 			console.error(err);
 		}
-		const notes = JSON.parse(data);
-		res.json(notes);
+		res.json(JSON.parse(data));
 	});
+});
+
+app.post('api/notes', (req,res) => {
+	const newNote = req.body;
+	newNote.id = uuid();
+	
+	fs.appendfile('db/db.json', 'utf8', (err, data) => {
+		json.stringify(data)
+		if (err) {
+			console.log(err);
+		}
+	})
 });
 
 app.listen(PORT, () =>
